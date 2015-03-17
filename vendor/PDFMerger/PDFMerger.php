@@ -67,7 +67,7 @@ class PDFMerger
 	 * @param $outputname
 	 * @return PDF
 	 */
-	public function merge($outputmode = 'browser', $outputpath = 'newfile.pdf')
+	public function merge($outputmode = 'browser', $outputpath = 'newfile.pdf', $orientation = 'P')
 	{
 		if(!isset($this->_files) || !is_array($this->_files)): throw new exception("No PDFs to merge."); endif;
 		
@@ -89,7 +89,7 @@ class PDFMerger
 					$template 	= $fpdi->importPage($i);
 					$size 		= $fpdi->getTemplateSize($template);
 					
-					$fpdi->AddPage('P', array($size['w'], $size['h']));
+					$fpdi->AddPage($orientation, array($size['w'], $size['h']));
 					$fpdi->useTemplate($template);
 				}
 			}
@@ -100,7 +100,7 @@ class PDFMerger
 					if(!$template = $fpdi->importPage($page)): throw new exception("Could not load page '$page' in PDF '$filename'. Check that the page exists."); endif;
 					$size = $fpdi->getTemplateSize($template);
 					
-					$fpdi->AddPage('P', array($size['w'], $size['h']));
+					$fpdi->AddPage($orientation, array($size['w'], $size['h']));
 					$fpdi->useTemplate($template);
 				}
 			}	
